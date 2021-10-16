@@ -8,38 +8,14 @@ const config = {
     },
     "timeout": 240000,
     "extend": {
-        // Add close pages function
-        closePages: async function () {
-            for (let page of await context.browser.pages()) {
-                await page.close();
-            }
-
-            context.page = await context.browser.newPage();
-            for (let [evenName, event] of Object.entries(config.page.events)) {
-                context.page.on(evenName, event);
-            }
-            await context.page.evaluateOnNewDocument(`(${config.page.evaluate.document_start.toString()})();`);
-        },
-        slowType: async function (selector, text, delay = 500) {
-            for (let chr of text) {
-                await context.page.type(selector, chr);
-                await context.page.waitForTimeout(delay);
-            }
-        },
-        setCookies: async function (cookies) {
-            await context.page.setCookie(...cookies);
+        printTitle: async function () {
+            const title = await context.page.title();
+            console.log(title);
         },
     },
     "allowed_actions": [
-        "page.type",
         "page.goto",
-        "page.click",
-        "page.setCookie",
-        "extend.slowType",
-        "extend.setCookies",
-        "extend.closePages",
-        "page.waitForTimeout",
-        "page.waitForSelector",
+        "extend.printTitle",
     ],
     "browser": {
         "options": {

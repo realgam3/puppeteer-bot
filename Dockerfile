@@ -1,4 +1,5 @@
 FROM node:16.5.0-alpine
+LABEL maintainer="Tomer Zait (realgam3) <realgam3@gmail.com>"
 
 WORKDIR /usr/src/app
 COPY . .
