@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   backend:
@@ -15,6 +15,8 @@ services:
 
   bot:
     image: realgam3/puppeteer-bot:latest
+    deploy:
+      replicas: 2
     depends_on:
       - queue
     volumes:
