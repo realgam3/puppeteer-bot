@@ -1,4 +1,4 @@
-FROM node:16.5.0-alpine
+FROM node:20.2-alpine
 LABEL maintainer="Tomer Zait (realgam3) <realgam3@gmail.com>"
 
 WORKDIR /usr/src/app
@@ -14,9 +14,9 @@ RUN set -eux; \
     echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories; \
     \
     apk upgrade -U -a; \
-    apk add \
+    apk add --no-cache \
       libstdc++@edge \
-      chromium@testing \
+      chromium@edge \
       harfbuzz@edge \
       nss@edge \
       freetype@edge \
