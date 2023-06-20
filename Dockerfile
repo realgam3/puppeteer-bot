@@ -1,39 +1,43 @@
-FROM node:20.2-alpine
+FROM node:20-slim
 LABEL maintainer="Tomer Zait (realgam3) <realgam3@gmail.com>"
 
-WORKDIR /usr/src/app
-COPY . .
-
+ARG USERNAME=app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser
+ENV PUPPETEER_EXECUTABLE_PATH /opt/google/chrome/chrome
+WORKDIR /usr/src/app
+COPY package*.json .
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      gnupg \
+      ca-certificates \
+      curl; \
     \
-    echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories; \
-    echo "@edgecommunity http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories; \
-    echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories; \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list; \
+    curl -fsSL https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -; \
     \
-    apk upgrade -U -a; \
-    apk add --no-cache \
-      libstdc++@edge \
-      chromium@edge \
-      harfbuzz@edge \
-      nss@edge \
-      freetype@edge \
-      ttf-freefont@edge \
-      font-noto-emoji@edge \
-      wqy-zenhei@testing; \
-    rm -rf /var/cache/*; \
-    mkdir /var/cache/apk; \
-    mv local.conf /etc/fonts/local.conf; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+      libstdc++6 \
+      google-chrome-stable \
+      xvfb \
+      fonts-freefont-ttf \
+      fonts-noto-color-emoji \
+      fonts-wqy-zenhei; \
+    rm -rf /var/lib/apt/lists/*; \
     \
     npm install -g pm2; \
     npm install; \
     \
-    adduser -D bot -h /home/bot -s /bin/bash bot; \
+    useradd -m bot -s /bin/bash; \
     chown -R bot:bot /home/bot /usr/src/app
 
-USER bot
-ENV HOME /home/bot
+COPY . .
+
+USER ${USERNAME}
+ENV HOME=/tmp
+
 
 CMD [ "npm", "start" ]

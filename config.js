@@ -41,6 +41,11 @@ const config = {
         "page.waitForTimeout",
         "page.waitForSelector",
     ],
+    "xvfb": {
+        "args": [
+            "-screen", "0", '1280x720x24', "-ac"
+        ]
+    },
     "browser": {
         "options": {
             "headless": true,
