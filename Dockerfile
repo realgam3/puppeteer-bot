@@ -31,8 +31,7 @@ RUN set -eux; \
     npm install -g pm2; \
     npm install; \
     \
-    useradd -m bot -s /bin/bash; \
-    chown -R bot:bot /home/bot /usr/src/app
+    adduser --disabled-password --no-create-home --gecos ${USERNAME} ${USERNAME}
 
 COPY . .
 
