@@ -1,12 +1,13 @@
 # Docker Files
-Dockerfile
+Dockerfile*
 .dockerignore
 docker-compose*.yml
 
 # Project Files
-.idea
-node_modules
+.git/
+.idea/
+node_modules/
 package-lock.json
 README.md
 LICENSE
-examples
+examples/
