@@ -1,10 +1,10 @@
 const config = {
     "queue": {
-        "port": 5672,
-        "host": "queue",
-        "name": "browser",
-        "username": "guest",
-        "password": "guest",
+        "port": parseInt(process.env.RABBITMQ_PORT || 5672),
+        "host": process.env.RABBITMQ_HOST || "queue",
+        "name": process.env.QUEUE_NAME || "mobile",
+        "username": process.env.RABBITMQ_USERNAME || "guest",
+        "password": process.env.RABBITMQ_PASSWORD || "guest",
     },
     "timeout": 240000,
     "extend": {
