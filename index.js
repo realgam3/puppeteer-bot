@@ -47,7 +47,7 @@ function sleep(time = 1000) {
             const data = JSON.parse(msg.content.toString());
             await bot.run(data);
         } catch (error) {
-            console.error(error);
+            console.error(`[!] Error: ${error.message}`);
         }
         return channel.ackAll();
     });
