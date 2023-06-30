@@ -13,6 +13,7 @@
   "dependencies": {
     "amqplib": "^0.8.0",
     "axios": "^1.4.0",
+    "json-stringify-safe": "^5.0.1",
     "puppeteer": "^10.1.0",
     "xvfb": "^0.4.0"
   }

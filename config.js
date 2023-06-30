@@ -2,7 +2,7 @@ const config = {
     "queue": {
         "port": parseInt(process.env.RABBITMQ_PORT || 5672),
         "host": process.env.RABBITMQ_HOST || "queue",
-        "name": process.env.QUEUE_NAME || "mobile",
+        "name": process.env.QUEUE_NAME || "queue",
         "username": process.env.RABBITMQ_USERNAME || "guest",
         "password": process.env.RABBITMQ_PASSWORD || "guest",
     },
